@@ -42,7 +42,7 @@ const DataTable = () => {
             setStudentList(props.student);
         };
 
-        return (<button type="button" className="btn btn-primary">Details</button>)
+        return (<button type="button" className="btn btn-primary" onClick={display}>Details</button>);
 
     }
 
@@ -88,11 +88,8 @@ const DataTable = () => {
                         <p className="card-text">BirthDate: {student.birthdate}</p>
                     </div>
                     <div className="card-footer">
-                        <button type="button" className="btn btn-danger" onClick={() => {
-                            setShowDetails(false);
-                            setStudent(studentDefaultData)
-                        }}>Close
-                        </button>
+                        <button type="button" className="btn btn-danger" onClick={() => {setShowDetails(false); setStudent(studentDefaultData)}}>Close</button>
+
                     </div>
                 </div>
             );
