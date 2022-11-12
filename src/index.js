@@ -5,7 +5,7 @@ import DataTable from "./components/DataTable";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const messageJsx = <h1>hello workshop</h1>
+// const messageJsx = <h1>hello workshop</h1>
 
 
 root.render(<DataTable/>);

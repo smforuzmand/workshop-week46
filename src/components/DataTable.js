@@ -13,6 +13,16 @@ const DataTable = () => {
             country: 'Iran',
             city: 'Tehran'
         },
+        {
+            id: 2,
+            firstName: 'Jonas',
+            lastName: 'Era',
+            age: '35',
+            birthdate: '1986',
+            country: 'Sweden',
+            city: 'Gothenburg'
+        },
+
 
     ];
 
@@ -38,7 +48,7 @@ const DataTable = () => {
 
         const display = () => {
             setShowDetails(true);
-            console.log(props.student);
+            console.log("Show information",props.student);
             setStudentList(props.student);
         };
 
@@ -46,7 +56,30 @@ const DataTable = () => {
 
     }
 
+    const ShowStudentDetails = () => {
 
+        if (showDetails) {
+            return (
+                <div className="card">
+                    <div className="card-header bg-info text-white">
+                        student Information
+                    </div>
+                    <div className="card-body">
+                        <h5 className='card-title'>{student.country} {student.city} </h5>
+                        <p className="card-text">ID: {student.id}</p>
+                        <p className="card-text">Name: {student.firstName} {student.lastName}</p>
+                        <p className="card-text">BirthDate: {student.birthdate}</p>
+                    </div>
+                    <div className="card-footer">
+                        <button type="button" className="btn btn-danger" onClick={() => {setShowDetails(false); setStudent(studentDefaultData)}}>Close</button>
+
+                    </div>
+                </div>
+            );
+        } else {
+            return ("");
+        }
+    };
     const TableRow = (props) => {
         return (
             <tbody>
@@ -72,31 +105,6 @@ const DataTable = () => {
         )
 
     }
-
-    const ShowStudentDetails = () => {
-
-        if (showDetails===true) {
-            return (
-                <div className="card">
-                    <div className="card-header bg-info text-green">
-                        student Information
-                    </div>
-                    <div className="card-body">
-                        <h5 className='card-title'>{student.country} {student.city} </h5>
-                        <p className="card-text">ID: {student.id}</p>
-                        <p className="card-text">Name: {student.firstName} {student.lastName}</p>
-                        <p className="card-text">BirthDate: {student.birthdate}</p>
-                    </div>
-                    <div className="card-footer">
-                        <button type="button" className="btn btn-danger" onClick={() => {setShowDetails(false); setStudent(studentDefaultData)}}>Close</button>
-
-                    </div>
-                </div>
-            );
-        } else {
-            return ("");
-        }
-    };
     return (
         <div className="container">
             <table className="table table-striped table-hover">
