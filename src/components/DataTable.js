@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import button from "bootstrap/js/src/button";
 
 const DataTable = () => {
@@ -26,12 +26,10 @@ const DataTable = () => {
 
     ];
 
-
     const [studentList, setStudentList] = useState(initialData);
     const [showDetails, setShowDetails] = useState(false);
-    const studentDefaultData = {id: 0, firstName: '', lastName: '', age: '', birthdate: '', country: '', city: ''}
+    const studentDefaultData = {id: 0, firstName: '', lastName: '', age: '0', birthdate: '', country: '', city: ''}
     const [student, setStudent] = useState(studentDefaultData);
-
     const TableHeader = () => {
         return (
             <thead>
@@ -43,77 +41,92 @@ const DataTable = () => {
             </thead>
         );
     };
-
     const TableAction = (props) => {
 
         const display = () => {
             setShowDetails(true);
-            console.log("Show information",props.student);
-            setStudentList(props.student);
+            console.log("Show information", student);
+            setStudent(props.student);
+            setShowDetails(true);
         };
-
         return (<button type="button" className="btn btn-primary" onClick={display}>Details</button>);
+    }
 
+    const TableRow = (props) => {
+        const [TableRow, setTableRow] = useState([]);
+        useEffect(() => {
+            setTableRow(props.list);
+
+        }, [])
+        if (TableRow.length == 0) {
+            return (
+                <tbody>
+                <tr>
+                    <td colSpan="5">Data not found</td>
+                </tr>
+                </tbody>
+            );
+        } else {
+            return (
+                <tbody>
+                {TableRow.map((student) => {
+                    const row = (
+                        <tr key={student.id}>
+                            <td> {student.id}</td>
+                            <td> {student.firstName}</td>
+                            <td> {student.lastName}</td>
+                            <td> {student.age}</td>
+                            <td>
+                                <TableAction student={student}/>
+                            </td>
+                        </tr>
+                    )
+                    return row;
+                })}
+                </tbody>
+            );
+        }
     }
 
     const ShowStudentDetails = () => {
-
-        if (showDetails) {
-            return (
-                <div className="card">
-                    <div className="card-header bg-info text-white">
-                        student Information
-                    </div>
-                    <div className="card-body">
-                        <h5 className='card-title'>{student.country} {student.city} </h5>
-                        <p className="card-text">ID: {student.id}</p>
-                        <p className="card-text">Name: {student.firstName} {student.lastName}</p>
-                        <p className="card-text">BirthDate: {student.birthdate}</p>
-                    </div>
-                    <div className="card-footer">
-                        <button type="button" className="btn btn-danger" onClick={() => {setShowDetails(false); setStudent(studentDefaultData)}}>Close</button>
-
-                    </div>
-                </div>
-            );
-        } else {
-            return ("");
-        }
-    };
-    const TableRow = (props) => {
+        console.log(student);
         return (
-            <tbody>
-            {
+            <>
+                {showDetails && (
+                    <div className="card">
+                        <div className="card-header bg-info text-white">
+                            student Information
+                        </div>
+                        <div className="card-body">
+                            <h5 className='card-title'>{student.country} {student.city} </h5>
+                            <p className="card-text">ID: {student.id}</p>
+                            <p className="card-text">Name: {student.firstName} {student.lastName}</p>
+                            <p className="card-text">BirthDate: {student.birthdate}</p>
+                        </div>
+                        <div className="card-footer">
+                            <button type="button" className="btn btn-danger" onClick={() => {
+                                setShowDetails(false);
+                                setStudent({})
+                            }}>Hide
+                            </button>
 
-                props.list.map((student) => (
-
-                    <tr key={student.id}>
-                        <td> {student.id}</td>
-                        <td> {student.firstName}</td>
-                        <td> {student.lastName}</td>
-                        <td> {student.age}</td>
-                        <td><TableAction student={student}/></td>
-
-
-                    </tr>
-                ))
-
-            }
-
-            </tbody>
-
+                        </div>
+                    </div>
+                )}
+            </>
         )
-
     }
-    return (
-        <div className="container">
-            <table className="table table-striped table-hover">
-                <TableHeader />
-                <TableRow list={studentList} />
-            </table>
-            <br/>
-            <ShowStudentDetails />
-        </div>
-    );
+
+    return(
+    <div className="container">
+        <table className="table table-striped table-hover">
+            <TableHeader/>
+            <TableRow list={studentList}/>
+        </table>
+        <br/>
+        <ShowStudentDetails/>
+    </div>
+)
+    ;
 }
 export default DataTable;
