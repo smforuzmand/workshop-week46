@@ -21,6 +21,14 @@ const DataTable = () => {
             birthdate: '1986',
             country: 'Sweden',
             city: 'Gothenburg'
+        },{
+            id: 3,
+            firstName: 'Roudabeh',
+            lastName: 'Adnani',
+            age: '35',
+            birthdate: '1986',
+            country: 'Iran',
+            city: 'Isfahan'
         },
 
 
